@@ -35,6 +35,7 @@ class UserController extends GetxController {
     // }
     var data = await store.doc(userId).get();
     String username = data.data()!['first name'];
+    prefs?.setString("username", username);
     uname = username;
     // debugPrint(user.data().toString());
     update();

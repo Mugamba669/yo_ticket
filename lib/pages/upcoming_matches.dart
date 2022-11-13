@@ -18,6 +18,30 @@ class upComingMatches extends StatefulWidget {
 }
 
 class _upComingMatchesState extends State<upComingMatches> {
+  List<Map<String, dynamic>> teams = [
+    {
+      "team": "KCCA Vs Vipers",
+      "time": "1:00- 2:30pm",
+      "date": "12/10/2022",
+      "venue": "Namboole Stadium",
+      "image": ""
+    },
+    {
+      "team": "Jnja FC Vs Bunamwaya FC",
+      "time": "3:00 - 4:30pm",
+      "date": "12/12/2022",
+      "venue": "Namboole Stadium",
+      "image": ""
+    },
+    {
+      "team": "Mbale FC Vs Brighton FC",
+      "time": "12:00pm",
+      "date": "12/12/2021",
+      "venue": "Namboole Stadium",
+      "image": ""
+    }
+  ];
+  fetchMatches() {}
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,16 +66,14 @@ class _upComingMatchesState extends State<upComingMatches> {
             ),
           ),
           child: ListView.builder(
-            itemCount: 8,
+            itemCount: teams.length,
             itemBuilder: (BuildContext context, int index) => Card(
               child: ListTile(
                 leading: const CircleAvatar(
-                  backgroundImage: NetworkImage(
-                    "https://viperssc.co.ug/wp-content/uploads/2018/10/new-vipers-logo.png",
-                  ),
+                  backgroundImage: AssetImage("assets/ball.png"),
                 ),
-                title: const Text("Vipers vs KCCA"),
-                subtitle: const Text("2pm - 4pm"),
+                title: Text(teams[index]["team"]),
+                subtitle: Text(teams[index]["time"]),
                 trailing: TextButton(
                   onPressed: () {
                     // MyHomePage(title: 'hello');

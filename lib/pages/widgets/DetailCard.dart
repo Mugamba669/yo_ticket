@@ -7,7 +7,7 @@ class DetailCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.663,
+      height: MediaQuery.of(context).size.height * 0.73,
       width: MediaQuery.of(context).size.width * 0.9,
       decoration: const BoxDecoration(
         color: Colors.white,
