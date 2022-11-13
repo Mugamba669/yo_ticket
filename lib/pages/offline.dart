@@ -46,12 +46,6 @@ class Offline extends StatelessWidget {
               ),
             ),
           ),
-          // Center(
-          //   child: RoundedButton(
-          //       text: "Reload",
-          //       press: () => RestartWidget.restartApp(context),
-          //       color: Colors.red),
-          // ),
         ],
       ),
     );

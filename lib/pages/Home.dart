@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:miic/pages/Profile.dart';
 import 'package:miic/pages/homePage.dart';
 import 'package:miic/pages/upcoming_matches.dart';
 import 'package:miic/payments/reports.dart';
@@ -16,7 +17,8 @@ class _HomeState extends State<Home> {
     const HomePage(),
     const upComingMatches(),
     // const upComingMatches(),
-    const Reports()
+    // const Reports()
+    const Profile()
   ];
   PageController pageController = PageController();
   void _onItemTapped(int index) {
@@ -53,8 +55,8 @@ class _HomeState extends State<Home> {
             label: 'Tournaments',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.receipt_long),
-            label: 'Reports',
+            icon: Icon(Icons.person),
+            label: 'Profile',
           ),
         ],
         currentIndex: _selectedIndex,
