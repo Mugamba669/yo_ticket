@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:miic/controllers/UserController.dart';
 import 'package:miic/getData/getUserName.dart';
 import 'package:miic/pages/widgets/Space.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -17,6 +18,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  String? username = "";
   @override
   initState() {
     super.initState();
@@ -73,12 +75,18 @@ class _HomePageState extends State<HomePage> {
       "image": ""
     }
   ];
+
   //GET THE Document ids
-  Future getDocId() async {}
+  getDocId() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    username = prefs.getString("username");
+  }
 
   @override
   Widget build(BuildContext context) {
-    usrCtrl.getUserName();
+    // usrCtrl.getUserName();
+    getDocId();
+
     return Scaffold(
       appBar: AppBar(
           leadingWidth: MediaQuery.of(context).size.width,
@@ -86,7 +94,7 @@ class _HomePageState extends State<HomePage> {
             padding: const EdgeInsets.all(8.0),
             child: Center(
               child: Text(
-                "Hi ${usrCtrl.uname},",
+                "Hi $username,",
                 style: const TextStyle(
                     color: Colors.black,
                     fontSize: 19,

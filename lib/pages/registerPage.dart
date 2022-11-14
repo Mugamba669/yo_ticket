@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
 
 import '../controllers/UserController.dart';
@@ -38,9 +39,11 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   addUserDetails(String firstName, String lastName, String email) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     String userId = uuid.v4();
-    usrCtrl.setValue("userId", userId);
-    usrCtrl.setValue("username", firstName);
+    prefs.setString("userId", userId);
+    prefs.setString("username", firstName);
+    prefs.setString("lastname", lastName);
     await FirebaseFirestore.instance.collection('users').doc(userId).set({
       'first name': firstName,
       'last name': lastName,
@@ -50,7 +53,8 @@ class _RegisterPageState extends State<RegisterPage> {
 
   bool passwordConfirmed() {
     if (_passwordController.text.trim() ==
-        _confirmPasswordController.text.trim()) {
+            _confirmPasswordController.text.trim() &&
+        (_confirmPasswordController.text.length >= 6)) {
       return true;
     } else {
       return false;
@@ -69,6 +73,13 @@ class _RegisterPageState extends State<RegisterPage> {
           _lastNameController.text.trim(), _emailController.text.trim()
           // int.parse(_ageController.text.trim())
           );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          behavior: SnackBarBehavior.floating,
+          content: Text("Password does not match"),
+        ),
+      );
     }
   }
 
@@ -101,7 +112,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     children: [
                       const Center(
                         child: Text(
-                          'YOTICKET',
+                          'Yo Ticket',
                           style: TextStyle(
                             fontSize: 32,
                             fontWeight: FontWeight.w400,

@@ -5,6 +5,7 @@ import 'package:flutterwave_standard/flutterwave.dart';
 import 'package:miic/controllers/UserController.dart';
 import 'package:miic/pages/summary.dart';
 import 'package:miic/routing/routing.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
 
 class Payment extends StatefulWidget {
@@ -166,14 +167,15 @@ class _PaymentState extends State<Payment> {
   }
 
   _handlePaymentInitialization() async {
+    SharedPreferences pres = await SharedPreferences.getInstance();
     final Customer customer = Customer(
-        name: "Mugamba Bruno",
+        name: "${pres.getString("username")} ${pres.getString("lastname")}",
         phoneNumber: phoneNumberController.text,
         email: emailController.text);
 
     final Flutterwave flutterwave = Flutterwave(
       context: context,
-      publicKey: "FLWPUBK_TEST-16029d185fd2edb8519bc0782388a98e-X",
+      publicKey: "FLWPUBK_TEST-ef7bd4f1bd8a112740eb300dd20083d4-X",
       // encryptionKey: "FLWSECK_TESTcc6563bff662".trim(),
       currency: selectedCurrency,
       redirectUrl: 'https://flutterwave.com',
@@ -206,12 +208,12 @@ class _PaymentState extends State<Payment> {
             "name": usrCtrl.uname
           },
         };
-        showLoading("Transaction completed successfully.");
+        showLoading("Transaction completed successfully.\n ${response.status}");
         routeAnimatePage(context, Summary(data: data));
 
         debugPrint("${response.toJson()}");
       } else {
-        showLoading("Transaction failed!!!");
+        showLoading("Transaction failed!!! \n ${response.status}");
       }
       // showLoading(response.success.toString());
     } else {
@@ -220,7 +222,7 @@ class _PaymentState extends State<Payment> {
   }
 
   String getPublicKey() {
-    if (isTestMode) return "FLWPUBK_TEST-16029d185fd2edb8519bc0782388a98e-X";
+    if (isTestMode) return "FLWPUBK_TEST-f3380ee93ac2cacd8047c38c85c2e00f-X";
     return "FLWPUBK_TEST-16029d185fd2edb8519bc0782388a98e-X";
   }
 
